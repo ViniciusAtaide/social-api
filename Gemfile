@@ -12,6 +12,8 @@ gem 'puma', '~> 3.7'
 gem 'redis', '~> 4.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'rswag'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -19,6 +21,7 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'json_spec'
   gem 'guard-rspec', require: false
   gem 'rspec-rails'
 end

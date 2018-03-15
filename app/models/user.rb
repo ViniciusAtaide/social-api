@@ -1,4 +1,8 @@
+require 'elasticsearch/model'
+
 class User < ApplicationRecord
+    include Elasticsearch::Model
+
     validates :name, presence: true
     validates :email, presence: true, uniqueness: true
 

@@ -1,8 +1,18 @@
 example_id                             | status | run_time        |
 -------------------------------------- | ------ | --------------- |
-./spec/requests/users_spec.rb[1:1:1:1] | passed | 0.00505 seconds |
-./spec/requests/users_spec.rb[1:1:2:1] | passed | 0.05372 seconds |
-./spec/requests/users_spec.rb[1:1:2:2] | passed | 0.04667 seconds |
-./spec/requests/users_spec.rb[1:1:2:3] | passed | 0.04706 seconds |
-./spec/requests/users_spec.rb[1:2:1]   | passed | 0.0134 seconds  |
-./spec/requests/users_spec.rb[1:2:2]   | passed | 0.5138 seconds  |
+./spec/requests/posts_spec.rb[1:1]     | passed | 0.55556 seconds |
+./spec/requests/posts_spec.rb[1:2]     | passed | 0.0482 seconds  |
+./spec/requests/users_spec.rb[1:1:1]   | passed | 0.00468 seconds |
+./spec/requests/users_spec.rb[1:2:1]   | passed | 0.05132 seconds |
+./spec/requests/users_spec.rb[1:2:2]   | passed | 0.05287 seconds |
+./spec/requests/users_spec.rb[1:2:3]   | passed | 0.05081 seconds |
+./spec/requests/users_spec.rb[2:1]     | passed | 0.01321 seconds |
+./spec/requests/users_spec.rb[2:2]     | passed | 0.00933 seconds |
+./spec/requests/users_spec.rb[2:3:1]   | passed | 0.01065 seconds |
+./spec/requests/users_spec.rb[3:1:1]   | passed | 0.02199 seconds |
+./spec/requests/users_spec.rb[3:1:2:1] | passed | 0.01137 seconds |
+./spec/requests/users_spec.rb[3:2:1]   | passed | 0.00805 seconds |
+./spec/requests/users_spec.rb[3:2:2:1] | passed | 0.00806 seconds |
+./spec/requests/users_spec.rb[4:1]     | passed | 0.01678 seconds |
+./spec/requests/users_spec.rb[5:1]     | passed | 0.57569 seconds |
+./spec/requests/users_spec.rb[5:2:1]   | passed | 0.02143 seconds |
