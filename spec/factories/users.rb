@@ -7,6 +7,7 @@ FactoryBot.define do
     trait :vinny do
       name "vinny"
       email "vinny@email.com"
+      bio { Faker::Lorem.paragraph }
     end
   end
 end

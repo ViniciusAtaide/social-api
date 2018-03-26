@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'pry'
 
 RSpec.describe 'GET /posts' do
   subject { json }
@@ -35,8 +34,6 @@ RSpec.describe 'POST /posts' do
   end
 
   it { is_expected.to include 'content' => content }
-  it { is_expected.to include 'likes' }
-
 end
 
 RSpec.describe 'PATCH /posts' do
@@ -50,15 +47,66 @@ RSpec.describe 'PATCH /posts' do
   it { is_expected.to have_http_status 204 }
 end
 
-RSpec.describe 'Self Like /user/:user_id/post/:post_id' do
-  before do
-    create(:user) do |u|
-      p = u.posts.create attributes_for :post
-      get user_post_like_path u, p
+RSpec.describe 'Like /post/:id' do
+  let(:u) { create(:user) }
+  let(:u2) { create(:user) }
+
+  context 'Self like' do
+    before do
+      p = build(:post)
+      p.user = u
+      p.save!
+      post post_like_path(p), params: { liked_from: u.id }
     end
+    subject { json }
+
+    it { is_expected.to have(1).items }
+    it { is_expected.to include include 'name' }
+  end
+  context 'Liking other post' do
+
+    before do
+      p = build(:post)
+      p.user = u
+      p.save!
+      post post_like_path(p), params: { liked_from: u2.id }
+    end
+
+    subject { json }
+
+    it { is_expected.to have(1).items }
+    it { is_expected.to include include 'id' => u2.id }
+  end
+end
+
+RSpec.describe 'Unlike /post/:id' do
+  let(:u) { create(:user) }
+  let(:u2) { create(:user) }
+
+  context 'Self unlike' do
+    before do
+      p = build(:post)
+      p.user = u
+      p.save!
+      post post_unlike_path(p), params: { liked_from: u.id }
+    end
+    subject { json }
+
+    it { is_expected.to be_empty }
+    it { is_expected.not_to include include 'name' }
   end
 
-  subject { json }
+  context 'Unliking other post' do
+    before do
+      p = build(:post)
+      p.user = u
+      p.save!
+      post post_like_path(p), params: { liked_from: u2.id }
+    end
 
-  fit { is_expected.to include 'likes' }
+    subject { json }
+
+    it { is_expected.to have(1).items }
+    it { is_expected.to include include 'id' => u2.id }
+  end
 end

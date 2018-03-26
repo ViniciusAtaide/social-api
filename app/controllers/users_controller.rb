@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find user_params(:id)
+    @user = User.find user_params :id
     render json: @user, status: :ok
   end
 
