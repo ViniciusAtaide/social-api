@@ -10,7 +10,7 @@ RSpec.describe 'GET /users' do
 
   context 'when there are users' do
     before do
-      create_list(:user, 10)
+      create_list :user, 10
       get users_path
     end
 
@@ -21,7 +21,7 @@ RSpec.describe 'GET /users' do
 end
 
 RSpec.describe 'GET /users/:id' do
-  let(:user) { create(:user) }
+  let(:user) { create :user }
 
   before { get users_path(user) }
 
@@ -38,7 +38,7 @@ end
 
 RSpec.describe 'POST /users' do
   context 'when another user has the same email' do
-    let(:user) { create(:user) }
+    let(:user) { create :user }
 
     before do
       post users_path, params: {
@@ -77,10 +77,10 @@ RSpec.describe 'POST /users' do
 end
 
 RSpec.describe 'PATCH /users' do
-  let(:user) { create(:user) }
+  let(:user) { create :user }
 
   before do
-    patch user_path(user), params: {
+    patch user_path user, params: {
       name: Faker::Name.unique.name
     }
   end
@@ -90,16 +90,16 @@ RSpec.describe 'PATCH /users' do
 end
 
 RSpec.describe 'DELETE /users' do
-  let(:user) { create(:user) }
+  let(:user) { create :user }
 
-  before { delete user_path(user) }
+  before { delete user_path user }
 
   subject { response }
 
   it { is_expected.to have_http_status :no_content }
 
   context "when searching for user" do
-    before { get user_path(user) }
+    before { get user_path user }
 
     it { is_expected.to have_http_status 404 }
   end

@@ -29,7 +29,7 @@ RSpec.describe 'POST /posts' do
 
   before do
     create(:user) do |u|
-      post user_posts_path(u), params: { content: content }
+      post user_posts_path u, params: { content: content }
     end
   end
 
@@ -37,76 +37,61 @@ RSpec.describe 'POST /posts' do
 end
 
 RSpec.describe 'PATCH /posts' do
-  let(:post) { create(:post) }
+  let(:post) { create :post }
 
   before do
-    patch post_path(post), params: { content: Faker::Lorem.paragraph }
+    patch post_path post, params: { content: Faker::Lorem.paragraph }
   end
 
   subject { response }
   it { is_expected.to have_http_status 204 }
 end
 
-RSpec.describe 'Like /post/:id' do
-  let(:u) { create(:user) }
-  let(:u2) { create(:user) }
+RSpec.describe 'Like/Unlike /post/:id' do
+  let(:u) { create :user }
+  let(:u2) { create :user }
+  let(:p) { create :post do |p|
+              p.user = u
+            end }
 
-  context 'Self like' do
-    before do
-      p = build(:post)
-      p.user = u
-      p.save!
-      post post_like_path(p), params: { liked_from: u.id }
-    end
-    subject { json }
+  subject { json }
 
-    it { is_expected.to have(1).items }
-    it { is_expected.to include include 'name' }
-  end
-  context 'Liking other post' do
+  describe 'Like' do
+    context 'Self like' do
+      before do
+        post post_like_path p, params: { liked_from: u.id }
+      end
 
-    before do
-      p = build(:post)
-      p.user = u
-      p.save!
-      post post_like_path(p), params: { liked_from: u2.id }
+      it { is_expected.to have(1).items }
+      it { is_expected.to include include 'name' }
     end
 
-    subject { json }
+    context 'Liking other post' do
+      before do
+        post post_like_path p, params: { liked_from: u2.id }
+      end
 
-    it { is_expected.to have(1).items }
-    it { is_expected.to include include 'id' => u2.id }
-  end
-end
-
-RSpec.describe 'Unlike /post/:id' do
-  let(:u) { create(:user) }
-  let(:u2) { create(:user) }
-
-  context 'Self unlike' do
-    before do
-      p = build(:post)
-      p.user = u
-      p.save!
-      post post_unlike_path(p), params: { liked_from: u.id }
+      it { is_expected.to have(1).items }
+      it { is_expected.to include include 'id' => u2.id }
     end
-    subject { json }
-
-    it { is_expected.to be_empty }
-    it { is_expected.not_to include include 'name' }
   end
 
-  context 'Unliking other post' do
-    before do
-      p = build(:post)
-      p.user = u
-      p.save!
-      post post_like_path(p), params: { liked_from: u2.id }
+  describe 'Unlike' do
+    context 'Self unlike' do
+      before do
+        post post_unlike_path(p), params: { liked_from: u.id }
+      end
+
+      it { is_expected.to be_empty }
+      it { is_expected.not_to include include 'name' }
     end
+    context 'Unliking other post' do
+      before do
+        post post_like_path(p), params: { liked_from: u2.id }
+      end
 
-    subject { json }
-
-    it { is_expected.to have(1).items }
-    it { is_expected.to include include 'id' => u2.id }
+      it { is_expected.to have(1).items }
+      it { is_expected.to include include 'id' => u2.id }
+    end
   end
 end

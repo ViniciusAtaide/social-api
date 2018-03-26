@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'GET /comments' do
   subject { json }
   before do
-    create_list(:comment, 5)
+    create_list :comment, 5
     get comments_path
   end
 
@@ -16,8 +16,8 @@ RSpec.describe 'GET /comment/:id' do
   subject { json }
 
   before do
-    comment = create(:comment)
-    get comment_path(comment)
+    comment = create :comment
+    get comment_path comment
   end
 
   it { is_expected.to include 'content' }
@@ -27,8 +27,8 @@ end
 RSpec.describe 'POST /comments' do
   subject { json }
   let(:content) { Faker::Lorem.paragraph }
-  let(:u) { create(:user) }
-  let(:p) { build(:post) }
+  let(:u) { create :user }
+  let(:p) { build :post }
 
   before do
     p.user = u
