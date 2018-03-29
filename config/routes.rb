@@ -10,10 +10,12 @@ Rails.application.routes.draw do
       resources :posts do
         post 'like'
         post 'unlike'
+        get 'likes'
       end
       resources :comments do
         post 'like'
         post 'unlike'
+        get 'likes'
       end
     end
   end

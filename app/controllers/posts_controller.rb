@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[show update destroy]
+  before_action :set_post, only: %i[show update destroy likes]
 
   def index
     posts = Post.all
@@ -22,6 +22,11 @@ class PostsController < ApplicationController
     post = Post.find params[:post_id]
     post.users.destroy liked_from
     render json: post.users, status: :ok
+  end
+
+  def likes
+    post = Post.find params[:post_id]
+    render json: post.users.pluck(:id)
   end
 
   def create

@@ -17,11 +17,16 @@ class CommentsController < ApplicationController
     render json: comment.users, status: :ok
   end
 
+  def likes
+    comment = Comment.find params[:comment_id]
+    render json: comment.users
+  end
+
   def unlike
     liked_from = User.find params[:liked_from]
     comment = Comment.find params[:comment_id]
     comment.users.destroy liked_from
-    render json: comment.users, status: :ok
+    render json: comment.users.pluck(:id), status: :ok
   end
 
   def create
