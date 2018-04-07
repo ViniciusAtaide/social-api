@@ -11,9 +11,13 @@ gem 'pg'
 gem 'puma', '~> 3.7'
 gem 'redis', '~> 4.0'
 gem 'bcrypt', '~> 3.1.7'
-gem 'rswag'
+gem 'swagger-docs'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+gem 'will_paginate'
+gem 'api-pagination'
+gem 'jwt'
+gem 'simple_command'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

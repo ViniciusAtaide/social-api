@@ -1,21 +1,24 @@
 Rails.application.routes.draw do
   scope :api do
     scope :v1 do
+      post 'authenticate', to: 'authentication#authenticate'
+      
       resources :users do
-        resources :posts do
-          resources :comments
+        resources :posts, only: [:create] do
+          resources :comments, only: [:create]
         end
-        resources :comments
+        get 'comments', to: 'users#comments'
       end
-      resources :posts do
+      
+      resources :posts, only: [:index, :update, :delete, :show] do
+        get 'likes'
         post 'like'
         post 'unlike'
+      end        
+      resources :comments, only: [:index, :update, :delete, :show] do
         get 'likes'
-      end
-      resources :comments do
         post 'like'
         post 'unlike'
-        get 'likes'
       end
     end
   end

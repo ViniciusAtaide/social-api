@@ -1,4 +1,8 @@
+require 'elasticsearch/model'
+
 class Post < ApplicationRecord
+  include Elasticsearch::Model
+
   validates :content, presence: true
 
   has_many :liked_posts

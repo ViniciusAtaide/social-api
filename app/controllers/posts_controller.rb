@@ -1,8 +1,9 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[show update destroy likes]
+  before_action :set_post, only: %i[show update destroy]
 
   def index
-    posts = Post.all
+    page = params[:page] || 1
+    posts = Post.paginate page: page
     render json: posts, status: :ok
   end
 
@@ -26,23 +27,37 @@ class PostsController < ApplicationController
 
   def likes
     post = Post.find params[:post_id]
-    render json: post.users.pluck(:id)
+    render json: post.users.pluck(:id), status: :ok
   end
 
   def create
     user = User.find params[:user_id]
-    user.posts.create post_params
-    render json: user.posts.last, status: :ok
+    post = Post.new post_params
+    post.user = user
+    post.save!
+    render json: post, status: :ok
   end
 
   def update
-    @post.update post_params
-    head :no_content
+    @user = AuthorizeApiRequest.call(request.headers).result
+
+    if @user == @post.user
+      @post.update post_params
+      head :no_content
+    else
+      render json: 'Unauthorized', status: :unauthorized
+    end
   end
 
   def destroy
-    @post.destroy
-    head :no_content
+    @user = AuthorizeApiRequest.call(request.headers).result
+
+    if @user == @post.user
+      @post.destroy
+      head :no_content
+    else
+      render json: 'Unauthorized', status: :unauthorized
+    end
   end
 
   private
