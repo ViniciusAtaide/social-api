@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe 'Comments' do 
+RSpec.describe 'Comments' do
 
   let(:user) { create :user }
   let(:token) do
-    post authenticate_path, params: { 
-      email: user.email, 
-      password: 'password' 
+    post authenticate_path, params: {
+      email: user.email,
+      password: 'password'
     }
     return json["auth_token"]
   end

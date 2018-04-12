@@ -4,16 +4,16 @@ RSpec.describe 'Posts' do
 
   let(:user) { create :user }
   let(:token) do
-    post authenticate_path, params: { 
-      email: user.email, 
-      password: 'password' 
+    post authenticate_path, params: {
+      email: user.email,
+      password: 'password'
     }
     return json["auth_token"]
   end
 
   describe 'GET /posts' do
     subject { json }
-  
+
     before do
       create_list(:post, 5)
       get posts_path, headers: { authorization: token }
@@ -21,6 +21,7 @@ RSpec.describe 'Posts' do
 
     it { is_expected.not_to be_empty }
     it { is_expected.to have(5).items }
+    it { is_expected.to include include 'comments' =>  [] }
   end
 
   describe 'GET /posts/:id' do
@@ -56,7 +57,7 @@ RSpec.describe 'Posts' do
         p.user = user
         p.save!
       end
-    end 
+    end
 
     let(:content) { Faker::Lorem.paragraph }
 
@@ -171,7 +172,7 @@ RSpec.describe 'Posts' do
   end
 
   describe 'Likes /post/:id' do
-    
+
     let(:u) { create :user }
     let(:u2) { create :user }
     let(:u3) { create :user }
@@ -194,4 +195,3 @@ RSpec.describe 'Posts' do
     it { is_expected.to include u2.id }
   end
 end
-
