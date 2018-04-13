@@ -1,18 +1,12 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
 Things you may want to cover:
 
 * Ruby version
 2.4.5
+* Serve the api
+docker-compose up
 * Database initialization
-rake db:migrate
+docker-compose exec web rake db:migrate
 * How to run the test suite
-bundle exec rspec
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+docker-compose exec web bundle exec rspec
