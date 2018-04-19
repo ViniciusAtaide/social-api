@@ -26,5 +26,10 @@ module SocialApi
     config.autoload_paths << Rails.root.join('lib')
 
     config.debug_exception_response_format = :api
+
+    config.action_dispatch.default_headers = {
+	    'Access-Control-Allow-Origin' => '*',
+	    'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
+	  }
   end
 end
