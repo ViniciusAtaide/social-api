@@ -12,12 +12,12 @@ Rails.application.routes.draw do
         get 'search'
       end
 
-      resources :posts, only: [:index, :update, :delete, :show] do
+      resources :posts do
         get 'likes'
         post 'like'
         post 'unlike'
       end
-      resources :comments, only: [:index, :update, :delete, :show] do
+      resources :comments do
         get 'likes'
         post 'like'
         post 'unlike'

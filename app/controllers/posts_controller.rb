@@ -1,3 +1,4 @@
+
 # coding: utf-8
 class PostsController < ApplicationController
   include Swagger::Blocks
@@ -157,7 +158,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    user = User.find params[:user_id]
+    user = AuthorizeApiRequest.call(request.headers).result
     post = Post.new post_params
     post.user = user
     post.save!

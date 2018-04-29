@@ -105,7 +105,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.create! user_params
-    render json: @user, status: :created
+    command = AuthenticateUser.call(user_params[:email], user_params[:password])
+    render json: { auth_token: command.result }, status: :created
   end
 
   def update

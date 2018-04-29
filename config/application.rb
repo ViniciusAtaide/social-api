@@ -27,9 +27,6 @@ module SocialApi
 
     config.debug_exception_response_format = :api
 
-    config.action_dispatch.default_headers = {
-	    'Access-Control-Allow-Origin' => '*',
-	    'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
-	  }
+    config.i18n.default_locale = :pt
   end
 end
