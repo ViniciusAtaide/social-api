@@ -150,7 +150,7 @@ class CommentsController < ApplicationController
 
   def likes
     comment = Comment.find params[:comment_id]
-    render json: comment.users
+    render json: comment.users.pluck(:id)
   end
 
   def create

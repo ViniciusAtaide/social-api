@@ -142,14 +142,14 @@ class PostsController < ApplicationController
     liked_from = User.find params[:liked_from]
     post = Post.find params[:post_id]
     post.users<< liked_from
-    render json: post.users, status: :ok
+    render json: post.users.pluck(:id), status: :ok
   end
 
   def unlike
     liked_from = User.find params[:liked_from]
     post = Post.find params[:post_id]
     post.users.destroy liked_from
-    render json: post.users, status: :ok
+    render json: post.users.pluck(:id), status: :ok
   end
 
   def likes
